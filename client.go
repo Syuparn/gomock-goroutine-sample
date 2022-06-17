@@ -6,6 +6,9 @@ import (
 	"github.com/syuparn/gomock-goroutine-sample/proto"
 )
 
+type PersonID int64
+type PersonName string
+
 type personHandler struct {
 	client proto.PersonClient
 }
@@ -14,9 +17,9 @@ func NewPersonHandler(client proto.PersonClient) *personHandler {
 	return &personHandler{client: client}
 }
 
-func (h *personHandler) GetName(ctx context.Context, personID int64) (string, error) {
+func (h *personHandler) GetName(ctx context.Context, personID PersonID) (PersonName, error) {
 	req := &proto.GetRequest{
-		Id: personID,
+		Id: int64(personID),
 	}
 
 	res, err := h.client.Get(ctx, req)
@@ -24,5 +27,5 @@ func (h *personHandler) GetName(ctx context.Context, personID int64) (string, er
 		return "", err
 	}
 
-	return res.GetName(), nil
+	return PersonName(res.GetName()), nil
 }

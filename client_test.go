@@ -64,12 +64,12 @@ func TestGetName(t *testing.T) {
 
 	// test
 	h := NewPersonHandler(client)
-	actual, err := h.GetName(ctx, 1234)
+	actual, err := h.GetName(ctx, PersonID(1234))
 	if err != nil {
 		t.Error(err)
 	}
 
-	assert.Equal(t, "Taro", actual)
+	assert.Equal(t, PersonName("Taro"), actual)
 }
 
 // NOTE: this is a sample of failed test
@@ -88,7 +88,7 @@ func TestGetNameValidationErr(t *testing.T) {
 
 	// test
 	h := NewPersonHandler(client)
-	_, err = h.GetName(ctx, -1)
+	_, err = h.GetName(ctx, PersonID(-1))
 	if err == nil {
 		t.Error("validation error must be occurred")
 	}
@@ -110,7 +110,7 @@ func TestGetNameValidationErrRevised(t *testing.T) {
 
 	// test
 	h := NewPersonHandler(client)
-	_, err = h.GetName(ctx, -1)
+	_, err = h.GetName(ctx, PersonID(-1))
 	if err == nil {
 		t.Error("validation error must be occurred")
 	}
